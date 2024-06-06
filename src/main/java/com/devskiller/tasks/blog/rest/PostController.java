@@ -1,12 +1,10 @@
 package com.devskiller.tasks.blog.rest;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.devskiller.tasks.blog.model.dto.PostDto;
 import com.devskiller.tasks.blog.service.PostService;
@@ -24,8 +22,14 @@ public class PostController {
 
 	@GetMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public PostDto getPost(@PathVariable String id) {
-		return postService.getPost(id);
+	public ResponseEntity<PostDto> getPost(@PathVariable String id) {
+		return ResponseEntity.status(HttpStatus.OK).body(postService.getPost(id));
+	}
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Object> savePost(@RequestBody @Valid PostDto postDto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(postService.savePost(postDto));
 	}
 
 }

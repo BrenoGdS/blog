@@ -1,4 +1,6 @@
 package com.devskiller.tasks.blog.model.dto;
 
-public record NewCommentDto(String author, String content) {
+import jakarta.validation.constraints.NotBlank;
+
+public record NewCommentDto(@NotBlank String author,@NotBlank String content) {
 }
